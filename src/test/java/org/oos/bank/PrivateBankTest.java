@@ -25,7 +25,7 @@ public class PrivateBankTest {
         privatBank1 = new PrivatBank("sparkasse", 0.2, 0.3);
 
         try {
-            for (int i  =0; i < 100; i++){
+            for (int i  =0; i < 3; i++){
                 transactions.add(
                         new Payment(generateString(),
                                 Math.random() * 1000 + 1,
@@ -385,6 +385,31 @@ public class PrivateBankTest {
         transactionList = transactions.stream().filter(transaction -> transaction.calculate() < 0).collect(Collectors.toList());
 
         Assertions.assertEquals(transactionTyped, transactionList);
+    }
+
+    @Test
+    void getAllAccounts() throws TransactionAlreadyExistException, AccountAlreadyExistsException, TransactionAttributeException {
+
+        for (int i = 0; i < 100; i++){
+            privatBank1.createAccount(generateString(), transactions, false);
+        }
+
+    }
+
+    @Test
+    void removeAccount() throws TransactionAlreadyExistException, AccountAlreadyExistsException, TransactionAttributeException, AccountDoesNotExistException, IOException {
+        for (int i = 0; i < 100; i++){
+            privatBank1.createAccount(generateString(), transactions, false);
+        }
+        int count = privatBank1.getAllAccounts().size();
+        for (String account: privatBank1.getAllAccounts()){
+            privatBank1.deleteAccount(account);
+            count--;
+            Assertions.assertEquals(count, privatBank1.getAllAccounts().size());
+        }
+
+        Assertions.assertEquals(List.of(), privatBank1.getAllAccounts());
+
     }
     private String generateString(){
         return RandomStringUtils.randomAlphabetic(10);

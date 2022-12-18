@@ -2,6 +2,7 @@ package org.oos.bank;
 
 import org.oos.bank.exceptions.*;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -9,6 +10,9 @@ import java.util.List;
  * accounts and transactions.
  */
 public interface Bank {
+
+    void deleteAccount(String account) throws AccountDoesNotExistException, IOException;
+    List<String> getAllAccounts();
 
     /**
      * Adds an account to the bank.

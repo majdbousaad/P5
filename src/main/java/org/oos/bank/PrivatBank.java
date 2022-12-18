@@ -144,6 +144,20 @@ public class PrivatBank implements  Bank{
                 '}';
     }
 
+    @Override
+    public void deleteAccount(String account) throws AccountDoesNotExistException, IOException {
+        if(!accountsToTransactions.containsKey(account)){
+            throw new AccountDoesNotExistException("account " + account + " existiert nicht");
+        }
+        accountsToTransactions.remove(account);
+        writeAccount(account);
+    }
+
+    @Override
+    public List<String> getAllAccounts() {
+        return accountsToTransactions.keySet().stream().toList();
+    }
+
     /**
      * Adds an account to the bank.
      *

@@ -150,7 +150,13 @@ public class PrivatBank implements  Bank{
             throw new AccountDoesNotExistException("account " + account + " existiert nicht");
         }
         accountsToTransactions.remove(account);
-        writeAccount(account);
+        File file = new File("./data/"+ name + "/" + account + ".json");
+        if(file.delete()) {
+            System.out.println(file + " is deleted");
+        }
+        else {
+            System.out.println(file + " not deleted");
+        }
     }
 
     @Override

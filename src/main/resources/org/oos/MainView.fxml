@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane fx:id="border" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.oos.controllers.MainView">
+   <center>
+      <ListView fx:id="accountsListView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <contextMenu>
+            <ContextMenu>
+              <items>
+                  <MenuItem fx:id="deleteKonto" onAction="#deleteKonto" mnemonicParsing="false" text="Löschen" />
+                <MenuItem fx:id="showKonto" onAction="#showKonto" mnemonicParsing="false" text="Anzeigen" />
+              </items>
+            </ContextMenu>
+         </contextMenu>
+      </ListView>
+   </center>
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+                  <MenuItem fx:id="neuesKontoButton" mnemonicParsing="false" onAction="#showDialogKonto" text="Neues Konto Erstellen" />
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <bottom>
+      <Text fx:id="status" fill="#a3a3a3" strokeType="OUTSIDE" strokeWidth="0.0" text="status..." BorderPane.alignment="CENTER_LEFT" />
+   </bottom>
+</BorderPane>

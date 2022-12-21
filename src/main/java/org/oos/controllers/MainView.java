@@ -20,6 +20,7 @@ import org.oos.bank.exceptions.*;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class MainView {
 
@@ -125,26 +126,27 @@ public class MainView {
     public void showKonto(ActionEvent event) throws IOException {
         String selected = accountsListView.getSelectionModel().getSelectedItem();
 
-
-
         FXMLLoader accountSceneContent = new FXMLLoader(Main.class.getResource("AccountView.fxml"));
         Parent root = accountSceneContent.load();
 
         Account accountController = accountSceneContent.getController();
+        Scene scene = (Scene) border.getScene();
+        Map<String, Object> data = new HashMap<>();
+        data.put("account", selected);
+        data.put("scene", scene);
+        data.put("bank", privatBank);
+        data.put("stage", scene.getWindow());
+
         try {
-            accountController.passData(privatBank, selected);
-        } catch (TransactionAttributeException e) {
-            throw new RuntimeException(e);
-        } catch (TransactionAlreadyExistException e) {
-            throw new RuntimeException(e);
-        } catch (AccountDoesNotExistException e) {
+            accountController.passData(data);
+        } catch (TransactionAttributeException | TransactionAlreadyExistException | AccountDoesNotExistException e) {
             throw new RuntimeException(e);
         }
 
 
-        Stage stage = (Stage) border.getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
+        Stage stage = (Stage) scene.getWindow();
+        Scene accountScene = new Scene(root);
+        stage.setScene(accountScene);
         stage.setTitle("Kontoübersicht");
         stage.show();
 
